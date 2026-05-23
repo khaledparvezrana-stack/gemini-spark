@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Google Gemini Spark — LinkedIn Keynote</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #4285F4;
+    --red: #EA4335;
+    --yellow: #FBBC04;
+    --green: #34A853;
+    --dark: #0f1117;
+    --card: #1a1d27;
+    --card-border: #2a2d3a;
+    --text: #e8e8ed;
+    --muted: #8b8fa3;
+    --glow-blue: rgba(66,133,244,0.15);
+    --glow-green: rgba(52,168,83,0.15);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    padding: 80px 0 60px;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -120px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, var(--glow-blue) 0%, transparent 70%);
+    pointer-events: none;
+    animation: pulse 4s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(1); }
+    50% { opacity: 1; transform: translateX(-50%) scale(1.1); }
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(66,133,244,0.1);
+    border: 1px solid rgba(66,133,244,0.25);
+    border-radius: 999px;
+    padding: 6px 18px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 28px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .badge .dot {
+    width: 6px; height: 6px;
+    background: var(--red);
+    border-radius: 50%;
+    animation: blink 1.5s infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .hero h1 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(42px, 8vw, 68px);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+    margin-bottom: 20px;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  .hero h1 .gradient {
+    background: linear-gradient(135deg, var(--blue), var(--green), var(--yellow), var(--red));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero .subtitle {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 520px;
+    margin: 0 auto 32px;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-meta {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .hero-meta span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    padding: 6px 14px;
+    border-radius: 8px;
+  }
+
+  @keyframes fadeUp {
+    from { opacity:0; transform: translateY(20px); }
+    to { opacity:1; transform: translateY(0); }
+  }
+
+  /* ── SECTION ── */
+  .section {
+    padding: 48px 0;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 12px;
+  }
+
+  .section h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 32px;
+    font-weight: 400;
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+  }
+
+  .section p {
+    color: var(--muted);
+    font-size: 15px;
+    max-width: 600px;
+  }
+
+  /* ── INFOGRAPHIC CARDS ── */
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  .info-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 28px 24px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+
+  .info-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(66,133,244,0.4);
+  }
+
+  .info-card .icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+
+  .info-card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .info-card p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .info-card.full {
+    grid-column: 1 / -1;
+  }
+
+  .ic-blue .icon { background: rgba(66,133,244,0.15); }
+  .ic-red .icon { background: rgba(234,67,53,0.15); }
+  .ic-green .icon { background: rgba(52,168,83,0.15); }
+  .ic-yellow .icon { background: rgba(251,188,4,0.15); }
+
+  /* ── STAT ROW ── */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 28px 20px;
+    text-align: center;
+  }
+
+  .stat-card .number {
+    font-family: 'Instrument Serif', serif;
+    font-size: 36px;
+    font-weight: 400;
+    margin-bottom: 4px;
+  }
+
+  .stat-card .label {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .num-blue { color: var(--blue); }
+  .num-green { color: var(--green); }
+  .num-yellow { color: var(--yellow); }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    margin-top: 32px;
+    position: relative;
+    padding-left: 32px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 4px;
+    bottom: 4px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--blue), var(--green), var(--yellow));
+    border-radius: 2px;
+  }
+
+  .tl-item {
+    position: relative;
+    margin-bottom: 28px;
+  }
+
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -29px;
+    top: 6px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid var(--blue);
+    background: var(--dark);
+  }
+
+  .tl-item:nth-child(2)::before { border-color: var(--green); }
+  .tl-item:nth-child(3)::before { border-color: var(--yellow); }
+  .tl-item:nth-child(4)::before { border-color: var(--red); }
+
+  .tl-item .tl-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--blue);
+    margin-bottom: 4px;
+  }
+
+  .tl-item h4 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .tl-item p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box {
+    margin-top: 32px;
+    background: linear-gradient(135deg, rgba(66,133,244,0.08), rgba(52,168,83,0.08));
+    border: 1px solid rgba(66,133,244,0.2);
+    border-radius: 20px;
+    padding: 36px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .highlight-box::after {
+    content: '⚡';
+    position: absolute;
+    right: 24px;
+    top: 24px;
+    font-size: 40px;
+    opacity: 0.15;
+  }
+
+  .highlight-box h3 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+
+  .highlight-box p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* ── COMPARISON ── */
+  .compare-table {
+    margin-top: 32px;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  .compare-table th, .compare-table td {
+    padding: 14px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--card-border);
+  }
+
+  .compare-table thead th {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  .compare-table td:first-child {
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .compare-table td {
+    color: var(--muted);
+  }
+
+  .compare-table td .check {
+    color: var(--green);
+    font-weight: 700;
+  }
+
+  /* ── TAKEAWAY ── */
+  .takeaway {
+    padding: 60px 0 48px;
+    text-align: center;
+  }
+
+  .takeaway h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 28px;
+    margin-bottom: 20px;
+    letter-spacing: -0.5px;
+  }
+
+  .takeaway-list {
+    list-style: none;
+    max-width: 540px;
+    margin: 0 auto;
+    text-align: left;
+  }
+
+  .takeaway-list li {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .takeaway-list li .num {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: rgba(66,133,244,0.12);
+    color: var(--blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .takeaway-list li strong { color: var(--text); }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding: 32px 0 48px;
+    border-top: 1px solid var(--card-border);
+  }
+
+  .footer p {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .hashtags {
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--blue);
+    font-weight: 500;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--card-border), transparent);
+    margin: 8px 0;
+  }
+
+  @media (max-width: 600px) {
+    .info-grid, .stat-row { grid-template-columns: 1fr; }
+    .hero-meta { flex-direction: column; align-items: center; gap: 8px; }
+    .compare-table { font-size: 11px; }
+    .compare-table th, .compare-table td { padding: 10px 8px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="badge"><span class="dot"></span> Google I/O 2026 — Just Launched</div>
+    <h1>Google <span class="gradient">Gemini Spark</span></h1>
+    <p class="subtitle">The AI just went from answering your questions to doing your work. Here's everything you need to know.</p>
+    <div class="hero-meta">
+      <span>📅 May 19, 2026</span>
+      <span>🏢 Google I/O — Mountain View</span>
+      <span>🧠 Powered by Gemini 3.5</span>
+    </div>
+  </header>
+
+  <div class="divider"></div>
+
+  <!-- WHAT IS IT -->
+  <section class="section">
+    <div class="section-label">01 — What Is It</div>
+    <h2>Your 24/7 Personal AI Agent</h2>
+    <p>Gemini Spark is Google's new agentic personal assistant — not just a chatbot, but an autonomous agent that takes action on your behalf across Gmail, Docs, Sheets, Slides, and more.</p>
+
+    <div class="info-grid">
+      <div class="info-card ic-blue">
+        <div class="icon">🤖</div>
+        <h3>Agentic, Not Assistive</h3>
+        <p>Spark doesn't wait for prompts — it proactively does real work under your direction.</p>
+      </div>
+      <div class="info-card ic-green">
+        <div class="icon">☁️</div>
+        <h3>Runs in the Cloud</h3>
+        <p>No need to keep your laptop open. It runs on dedicated Google Cloud VMs continuously.</p>
+      </div>
+      <div class="info-card ic-red">
+        <div class="icon">📧</div>
+        <h3>Deep Gmail Integration</h3>
+        <p>Watches your inbox, drafts status updates, and ensures you never miss a customer query.</p>
+      </div>
+      <div class="info-card ic-yellow">
+        <div class="icon">🔗</div>
+        <h3>MCP Connected</h3>
+        <p>Integrates with third-party tools via the Model Context Protocol — expanding all summer.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- KEY STATS -->
+  <section class="section">
+    <div class="section-label">02 — By the Numbers</div>
+    <h2>The Scale Behind Spark</h2>
+    <p>Backed by Gemini 3.5 Flash — Google's most capable and fastest model family to date.</p>
+
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="number num-blue">3.5</div>
+        <div class="label">Gemini Model Gen</div>
+      </div>
+      <div class="stat-card">
+        <div class="number num-green">24/7</div>
+        <div class="label">Always-On Agent</div>
+      </div>
+      <div class="stat-card">
+        <div class="number num-yellow">$100</div>
+        <div class="label">AI Ultra / Month</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- HOW IT WORKS -->
+  <section class="section">
+    <div class="section-label">03 — How It Works</div>
+    <h2>From Assistant → Active Partner</h2>
+    <p>Sundar Pichai calls Spark "the next evolution of smart digital assistants." Here's the architecture.</p>
+
+    <div class="highlight-box">
+      <h3>The Antigravity Engine</h3>
+      <p>Spark is built from Gemini base models plus an agentic harness from Google Antigravity. This orchestration layer enables long-horizon task planning with minimal human oversight — a fundamental shift from prompt-response to goal-oriented execution.</p>
+    </div>
+
+    <div class="timeline" style="margin-top: 40px;">
+      <div class="tl-item">
+        <div class="tl-date">Step 1</div>
+        <h4>You set a goal</h4>
+        <p>"Send my boss a status update with data from all my project docs."</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">Step 2</div>
+        <h4>Spark gathers context</h4>
+        <p>Pulls facts from Gmail, Docs, Sheets, and Slides autonomously.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">Step 3</div>
+        <h4>Drafts & executes</h4>
+        <p>Writes the email draft, presents it for your review, then sends.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">Step 4</div>
+        <h4>Keeps working</h4>
+        <p>Continues monitoring your inbox and tasks — even when your laptop is closed.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- COMPETITIVE LANDSCAPE -->
+  <section class="section">
+    <div class="section-label">04 — Competitive Landscape</div>
+    <h2>The Agentic AI Race</h2>
+    <p>Spark enters a crowded field — but Google's ecosystem gives it a unique edge.</p>
+
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Gemini Spark</th>
+          <th>Claude Cowork</th>
+          <th>ChatGPT Agent</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Always-on cloud agent</td>
+          <td><span class="check">✓</span></td>
+          <td><span class="check">✓</span></td>
+          <td><span class="check">✓</span></td>
+        </tr>
+        <tr>
+          <td>Native email integration</td>
+          <td><span class="check">✓</span> Gmail</td>
+          <td>Via MCP</td>
+          <td>Via plugins</td>
+        </tr>
+        <tr>
+          <td>Workspace suite access</td>
+          <td><span class="check">✓</span> Native</td>
+          <td>Partial</td>
+          <td>Partial</td>
+        </tr>
+        <tr>
+          <td>MCP support</td>
+          <td><span class="check">✓</span></td>
+          <td><span class="check">✓</span></td>
+          <td><span class="check">✓</span></td>
+        </tr>
+        <tr>
+          <td>Pricing</td>
+          <td>$100/mo Ultra</td>
+          <td>Varies</td>
+          <td>$200/mo Pro</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ALSO ANNOUNCED -->
+  <section class="section">
+    <div class="section-label">05 — Also at I/O 2026</div>
+    <h2>The Bigger Picture</h2>
+    <p>Spark was the headline, but Google shipped an entire product wave alongside it.</p>
+
+    <div class="info-grid">
+      <div class="info-card ic-blue">
+        <div class="icon">⚡</div>
+        <h3>Gemini 3.5 Flash</h3>
+        <p>Faster, more capable default model across all Google services.</p>
+      </div>
+      <div class="info-card ic-green">
+        <div class="icon">🎬</div>
+        <h3>Gemini Omni</h3>
+        <p>Multimodal model generating polished video from any input type.</p>
+      </div>
+      <div class="info-card ic-yellow">
+        <div class="icon">📰</div>
+        <h3>Daily Brief</h3>
+        <p>Personalized AI digest from Gmail, Calendar, and Tasks. Rolling out now.</p>
+      </div>
+      <div class="info-card ic-red">
+        <div class="icon">📊</div>
+        <h3>Compute-Based Pricing</h3>
+        <p>Gemini app moves from daily prompt limits to usage-based compute model.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- TAKEAWAYS -->
+  <section class="takeaway">
+    <h2>My 5 Key Takeaways</h2>
+    <ul class="takeaway-list">
+      <li>
+        <span class="num">01</span>
+        <span><strong>Agentic AI is now mainstream.</strong> Every major lab now has a persistent, goal-driven agent product. This isn't experimental anymore.</span>
+      </li>
+      <li>
+        <span class="num">02</span>
+        <span><strong>Google's ecosystem is the moat.</strong> Native Gmail + Docs + Sheets integration gives Spark a distribution advantage no competitor can match overnight.</span>
+      </li>
+      <li>
+        <span class="num">03</span>
+        <span><strong>Small businesses win big.</strong> Automated inbox monitoring and customer response means solopreneurs get an AI operations layer for $100/month.</span>
+      </li>
+      <li>
+        <span class="num">04</span>
+        <span><strong>MCP is becoming the universal standard.</strong> All three major AI agents now support MCP for third-party tool integration — a clear convergence.</span>
+      </li>
+      <li>
+        <span class="num">05</span>
+        <span><strong>The pricing war is heating up.</strong> Google's $100 AI Ultra tier undercuts OpenAI's $200 Pro tier while offering comparable agent functionality.</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>Researched & designed for LinkedIn · May 2026</p>
+    <div class="hashtags">#GeminiSpark #GoogleIO2026 #AgenticAI #AI #FutureOfWork #Gemini #GoogleAI</div>
+  </footer>
+
+</div>
+
+</body>
+</html>
